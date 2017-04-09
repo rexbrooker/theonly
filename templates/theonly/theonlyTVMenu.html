@@ -1,0 +1,71 @@
+{% extends "theonly/base.html" %} {% load staticfiles %} {% block extrahead %}
+<!-- theonly static files -->
+<link rel="stylesheet" type="text/css" href="{% static 'theonly/css/theonly.TV.css' %}" />
+<meta charset="utf-8">
+<title>Live Draught List</title>
+<link href='https://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+<META HTTP-EQUIV="Pragma" CONTENT="no-cache">
+<meta http-equiv="refresh" content="120;" /> 
+{% endblock extrahead %} 
+{% block content %}
+    <div class="body__content">
+        <div class="body__content-title">
+            <table class="body__content-title-table">
+                <tr>
+                    <td class="body__content-title-table-left"><img src="{% static 'theonly/images/logo.png' %}" alt="..."></td>
+                    <td class="body__content-title-table-center"><img src="{% static 'theonly/images/ontap.png' %}" alt="..."></td>
+                    <td class="body__content-title-table-right"><img src="{% static 'theonly/images/webs.png' %}" alt="..."></td>
+                </tr>
+            </table>
+        </div>
+        <div class="body__content-menu">
+            <table class="body__content-menu-table">
+                    {% if beverage_list %}
+                        {% for beverage in beverage_list %}
+                            {% if beverage.tap_number < 25 %}
+                                {% if beverage.tap_number < 13 %}<tr>{% endif %}
+                                <td class="no-cell">
+                                    <!-- {{ beverage.tap_number|divisibleby:"2" }} -->
+                                    {{ beverage.tap_number }} 
+                                    {% if beverage.tap_number_subtext %}<br><span class="spec">{{ beverage.tap_number_subtext }}:</span>{% endif %}
+                                </td>
+                                <td class="brewery-cell">{{ beverage.brewery }}</td>
+                                <td class="beer-cell">
+                                    <span class="brew">{{ beverage.beverage.beverage_name }}</span>
+                                    <span class="brewstyle">
+                                        <br>({{ beverage.beverage.beverage_style }} <em>- {{ beverage.beverage.beverage_abv }}% abv</em>)
+                                    </span>
+
+                                </td>
+                                <td class="glass-cell">
+                                    {{ beverage.beverage_serving_size.beverage_serving_size }} 
+                                    <img class="glass-image" src="{{ beverage.beverage_serving_graphic.beverage_serving_graphic.url }}" alt="...">
+                                </td>
+                                {% if beverage.tap_number > 12 %}</tr>{% endif %}
+                            {% else %}
+                            <table class="body__content-menu-table-base">
+                                <tr>
+                                    <td style="width: 25%"></td>
+                                    <td class="cask-cell"><img src="{% static 'theonly/images/cask.png' %}" alt="..."></td>
+                                    <td class="brewery-cell"> {{ beverage.brewery }} </td>
+                                    <td class="beer-cell"> 
+                                        <span class="cask">{{ beverage.beverage.beverage_name }}</span>
+                                        
+                                        <span class="brewstyle">
+                                            <br>({{beverage.beverage.beverage_style }} <em>- {{ beverage.beverage.beverage_abv }}% abv</em>)
+                                        </span>
+                                    </td>
+                                    <td class="glass-cell">
+                                        {{ beverage.beverage_serving_size.beverage_serving_size }} 
+                                        <img class="glass-image" src="{{ beverage.beverage_serving_graphic.beverage_serving_graphic.url }}" alt="...">
+                                    </td>
+                                    <td style="width: 25%"></td>
+                                </tr>
+                            </table>    
+                            {% endif %}
+                        {% endfor %} 
+                    {% endif %}
+            </table>
+        </div>
+    </div>
+{% endblock %}

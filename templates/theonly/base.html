@@ -1,0 +1,11 @@
+{% extends "base/base.html" %}
+{% load staticfiles %}
+
+{% block extrahead %}
+    <!-- theonly static files -->
+    <link rel="stylesheet" type="text/css" href="{% static 'theonly/css/theonly.main.css' %}" />
+    <script type="text/javascript" src="{% static 'theonly/js/theonly.main.js' %}"></script>
+	<title>theonlycafe</title>
+	{% block appextrahead %}{% endblock %}
+{% endblock extrahead %}
+

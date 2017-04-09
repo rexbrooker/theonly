@@ -1,0 +1,26 @@
+{% extends "theonly/base.html" %} 
+{% load crispy_forms_tags %}
+{% block content %}
+
+    <h1>{{data_name}}</h1>
+        <div class="container">
+
+            {% if all_entries %}
+                {% for entry in all_entries %}
+                
+                    {% if entry.beverage_serving_graphic %} 
+                        <img src="{{ entry.beverage_serving_graphic.url }}">
+                    {% endif %}
+                        <div class="data_entry">{{ entry }}</div>
+                {% endfor %}
+                
+            {% endif %}
+
+            {% csrf_token %}
+            {% crispy form %}
+            {{ form.errors }}
+            {{ form.non_field_errors }}
+        </div>    
+
+{% endblock %}
+
